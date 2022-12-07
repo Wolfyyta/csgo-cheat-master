@@ -6,6 +6,7 @@
 void screen::DrawOnScreen(ImDrawList* drawList)
 {
 	// watermark
+	// todo: make it slower ( let user control the speed
 	char buf[MAX_PATH] = "WolfHook";
 
 	for (int i = 0; i < ImGui::CalcTextSize(buf).x; i++)
