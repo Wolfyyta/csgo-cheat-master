@@ -6,7 +6,7 @@
 void screen::DrawOnScreen(ImDrawList* drawList)
 {
 	// watermark
-	char buf[MAX_PATH] = " WolfHook";
+	char buf[MAX_PATH] = "WolfHook";
 
 	for (int i = 0; i < ImGui::CalcTextSize(buf).x; i++)
 		if (interfaces::globals->frameCount % (i + 2) == 0)
