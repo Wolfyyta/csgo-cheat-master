@@ -226,12 +226,53 @@ int __stdcall hooks::ListLeavesInBox(const CVector& mins, const CVector& maxs, u
 	return ListLeavesInBoxOriginal(interfaces::engine->GetBSPTreeQuery(), min, max, list, listMax);
 }
 
+void __fastcall hooks::GetParticle(CInitRandomColor* thisPtr, void* edx, CParticleCollection* particles, int startp, int particleCount, int attributeWriteMask, void* context)
+{
+	CVector minOriginal = thisPtr->min;
+	CVector maxOriginal = thisPtr->max;
+
+	// todo: move in CParticelCollection with proper namings
+	const char* materialName = *(char**)(*(uintptr_t*)((uintptr_t)particles + 0x48) + 0x40);
+
+	// todo: smoke color modulation
+	if (variables::world::modulateMolotovColor)
+	{
+		switch (hash::RunTime(materialName))
+		{
+		case hash::CompileTime("particle\\fire_burning_character\\fire_env_fire.vmt"):
+		case hash::CompileTime("particle\\fire_burning_character\\fire_env_fire_depthblend.vmt"):
+		case hash::CompileTime("particle\\fire_burning_character\\fire_burning_character_depthblend.vmt"):
+		case hash::CompileTime("particle\\fire_burning_character\\fire_burning_character.vmt"):
+		case hash::CompileTime("particle\\fire_burning_character\\fire_burning_character_nodepth.vmt"):
+		case hash::CompileTime("particle\\particle_flares\\particle_flare_001.vmt"):
+		case hash::CompileTime("particle\\particle_flares\\particle_flare_004.vmt"):
+		case hash::CompileTime("particle\\particle_flares\\particle_flare_004b_mod_ob.vmt"):
+		case hash::CompileTime("particle\\particle_flares\\particle_flare_004b_mod_z.vmt"):
+		case hash::CompileTime("particle\\fire_explosion_1\\fire_explosion_1_bright.vmt"):
+		case hash::CompileTime("particle\\fire_explosion_1\\fire_explosion_1b.vmt"):
+		case hash::CompileTime("particle\\fire_particle_4\\fire_particle_4.vmt"):
+		case hash::CompileTime("particle\\fire_explosion_1\\fire_explosion_1_oriented.vmt"):
+
+			thisPtr->min = thisPtr->max = 
+				CVector(variables::world::molotovColor[0] / 255.0f, variables::world::molotovColor[1] / 255.0f, variables::world::molotovColor[2] / 255);
+
+			break;
+		}
+	}
+
+	GetParticleOriginal(thisPtr, particles, startp, particleCount, attributeWriteMask, context);
+
+	thisPtr->min = minOriginal;
+	thisPtr->max = maxOriginal;
+}
+
 void hooks::SetupHooks()
 {
 	MH_Initialize();
 	{
 		static auto settingsChatTextSig = utils::PatternScan("client.dll", "55 8B EC 56 8B F1 83 BE ? ? ? ? ? 75 4B");
 		static auto getPlayerMoneySig = utils::PatternScan("client.dll", "55 8B EC 56 8B 75 08 83 FE 3F 0F 87 ? ? ? ?");
+		static auto getParticleSig = utils::PatternScan("client.dll", "55 8B EC 83 EC 18 56 8B F1 C7 45");
 
 		MH_CreateHook(utils::Get(interfaces::device, 42), &EndScene, reinterpret_cast<void**>(&EndSceneOriginal));
 		MH_CreateHook(utils::Get(interfaces::device, 16), &Reset, reinterpret_cast<void**>(&ResetOriginal));
@@ -246,6 +287,7 @@ void hooks::SetupHooks()
 
 		MH_CreateHook(reinterpret_cast<void*>(settingsChatTextSig), &SettingsChatText, reinterpret_cast<void**>(&SettingsChatTextOriginal));
 		MH_CreateHook(reinterpret_cast<void*>(getPlayerMoneySig), &GetPlayerMoney, reinterpret_cast<void**>(&GetPlayerMoneyOriginal));
+		MH_CreateHook(reinterpret_cast<void*>(getParticleSig), &GetParticle, reinterpret_cast<void**>(&GetParticleOriginal));
 	}
 	MH_EnableHook(MH_ALL_HOOKS);
 }

@@ -96,6 +96,10 @@ void menu::Render() noexcept
 		ImGui::SliderFloat("viewmodel fov add", &variables::world::viewmodelFov, 0.f, 180.f);
 		ImGui::SliderFloat("world fov add", &variables::world::worldFov, 0.f, 180.f); /* 180.f max cuz let the user try xD */
 		ImGui::Checkbox("keep fov in scope", &variables::world::keepFovInScope);
+
+        ImGui::Checkbox("modify molotov color", &variables::world::modulateMolotovColor);
+        ImGui::SameLine();
+        ImGui::ColorEdit3("molotov color", variables::world::molotovColor);
 	}
 	ImGui::End();
 

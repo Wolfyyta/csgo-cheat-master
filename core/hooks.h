@@ -56,4 +56,8 @@ namespace hooks
 	using ListLeavesInBoxFn = int(__thiscall*)(void*, const CVector&, const CVector&, unsigned short*, int);
 	inline ListLeavesInBoxFn ListLeavesInBoxOriginal = { nullptr };
 	int __stdcall ListLeavesInBox(const CVector&, const CVector&, unsigned short*, int);
+
+	using GetParticleFn = void(__thiscall*)(CInitRandomColor*, CParticleCollection*, int, int, int, void*);
+	inline GetParticleFn GetParticleOriginal = nullptr;
+	void __fastcall GetParticle(CInitRandomColor* thisPtr, void* edx, CParticleCollection* particles, int startp, int particleCount, int attributeWriteMask, void* context);
 }

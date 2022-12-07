@@ -1,5 +1,21 @@
 #pragma once
+#include "cvector.h"
 #include "../utils/utils.h"
+
+class CParticleCollection
+{
+public:
+
+};
+
+class CInitRandomColor 
+{
+private:
+	std::byte pad1[92];
+public:
+	CVector min;
+	CVector max;
+};
 
 enum EFontDrawType : std::int32_t
 {
