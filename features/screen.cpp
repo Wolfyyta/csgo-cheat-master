@@ -1,31 +1,22 @@
+#include <Windows.h>
 #include "screen.h"
 #include "variables.h"
 #include "../globals.h"
 
 void screen::DrawOnScreen(ImDrawList* drawList)
 {
+	// watermark
+	char buf[MAX_PATH] = " WolfHook";
+
+	for (int i = 0; i < ImGui::CalcTextSize(buf).x; i++)
+		if (interfaces::globals->frameCount % (i + 2) == 0)
+			buf[i] = '$';
+
+	drawList->AddText({ 10, 10 }, ImColor(255, 255, 0, 255), buf);
+
 	if (variables::screen::debugInfo)
 	{
-		auto cmd = globals::cmd;
-		auto local = globals::local;
-
-		if (local)
-		{
-			drawList->AddText(ImVec2(10, 50), ImColor(255, 255, 255, 255), "CLocalPlayer is valid");
-		}
-		else
-		{
-			drawList->AddText(ImVec2(10, 50), ImColor(255, 255, 255, 255), "CLocalPlayer is 0");
-		}
-
-		if (cmd)
-		{
-			drawList->AddText(ImVec2(10, 10), ImColor(255, 255, 255, 255), "CUserCmd is valid");
-		}
-		else
-		{
-			drawList->AddText(ImVec2(10, 10), ImColor(255, 255, 255, 255), "CUserCmd is 0");
-		}
+		
 	}
 
 	if (variables::players::boxEsp && globals::local)

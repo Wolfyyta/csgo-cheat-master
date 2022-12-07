@@ -234,6 +234,13 @@ void __fastcall hooks::GetParticle(CInitRandomColor* thisPtr, void* edx, CPartic
 	// todo: move in CParticelCollection with proper namings
 	const char* materialName = *(char**)(*(uintptr_t*)((uintptr_t)particles + 0x48) + 0x40);
 
+	// todo: fix menu colors
+	static int r, g, b;
+
+	r = 0;
+	g = 255;
+	b = 255;
+
 	// todo: smoke color modulation
 	if (variables::world::modulateMolotovColor)
 	{
@@ -254,7 +261,7 @@ void __fastcall hooks::GetParticle(CInitRandomColor* thisPtr, void* edx, CPartic
 		case hash::CompileTime("particle\\fire_explosion_1\\fire_explosion_1_oriented.vmt"):
 
 			thisPtr->min = thisPtr->max = 
-				CVector(variables::world::molotovColor[0] / 255.0f, variables::world::molotovColor[1] / 255.0f, variables::world::molotovColor[2] / 255);
+				CVector(r, g, b);
 
 			break;
 		}
