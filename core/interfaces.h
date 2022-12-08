@@ -21,6 +21,7 @@
 #include "../sdk/cviewsetup.h"
 #include "../sdk/chud.h"
 #include "../sdk/iprediction.h"
+#include "../sdk/ieffects.h"
 
 namespace interfaces
 {
@@ -45,4 +46,5 @@ namespace interfaces
 	inline CHud* hud = nullptr;
 	inline CHudChat* hudChat = nullptr;
 	inline IPrediction* prediction = nullptr;
+	inline IEffects* effects = nullptr;
 }

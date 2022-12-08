@@ -20,7 +20,7 @@ void screen::DrawOnScreen(ImDrawList* drawList)
 		
 	}
 
-	if (variables::players::boxEsp && globals::local)
+	if (globals::local)
 	{
 		for (int i = 1; i < interfaces::globals->maxClients; i++)
 		{
@@ -55,10 +55,11 @@ void screen::DrawOnScreen(ImDrawList* drawList)
 			int hp = ent->GetHealth();
 
 			// hp
-			drawList->AddText({x - ImGui::CalcTextSize(std::to_string(hp).c_str()).x, y - ImGui::CalcTextSize("[bot] Chet").y}, ImColor(255, 255, 255, 255), std::to_string(hp).c_str());
+			drawList->AddText({x - ImGui::CalcTextSize(std::to_string(hp).c_str()).x, y - ImGui::CalcTextSize("[bot] Chet").y}, ImColor(0, 255, 0, 255), std::to_string(hp).c_str());
 			
 			// box (gradient?)
-			drawList->AddRect({ min.x, min.y }, { max.x, max.y }, ImColor(255, 0, 0, 255));
+			if (variables::players::boxEsp)
+				drawList->AddRect({ min.x, min.y }, { max.x, max.y }, ImColor(255, 0, 0, 255));
 		}
 	}
 }

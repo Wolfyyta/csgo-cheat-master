@@ -181,6 +181,7 @@
     <ClInclude Include="sdk\ibaseclientdll.h" />
     <ClInclude Include="sdk\icliententitylist.h" />
     <ClInclude Include="sdk\iclientmodeshared.h" />
+    <ClInclude Include="sdk\ieffects.h" />
     <ClInclude Include="sdk\ienginetrace.h" />
     <ClInclude Include="sdk\ienginevgui.h" />
     <ClInclude Include="sdk\iglobalvars.h" />

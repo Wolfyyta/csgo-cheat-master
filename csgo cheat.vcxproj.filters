@@ -239,5 +239,8 @@
     <ClInclude Include="sdk\iprediction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\ieffects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
